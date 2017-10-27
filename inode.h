@@ -3,18 +3,18 @@
 #include "internal.h"
 
 enum __attribute__((__packed__)) entry_type {
-  VOLUME_IDENTIFIER = 0x01,
-  STARTING_MARKER = 0x02,
-  UNUSED = 0x10,
-  DIRECTORY = 0x11,
-  FILE = 0x12,
-  UNUSABLE = 0x18,
-  DELETED_DIRECTORY = 0x19,
-  DELETED_FILE = 0x1A,
+  SFS_ENTRY_VOLUME_IDENTIFIER = 0x01,
+  SFS_ENTRY_STARTING_MARKER = 0x02,
+  SFS_ENTRY_UNUSED = 0x10,
+  SFS_ENTRY_DIRECTORY = 0x11,
+  SFS_ENTRY_FILE = 0x12,
+  SFS_ENTRY_UNUSABLE = 0x18,
+  SFS_ENTRY_DELETED_DIRECTORY = 0x19,
+  SFS_ENTRY_DELETED_FILE = 0x1A,
 
-  // a continuation will not necisarily have this byte sequence on-disk, but
+  // a continuation will not necessarily have this byte sequence on-disk, but
   // this is how continuations are identified elsewhere
-  CONTINUATION = 0x20
+  SFS_ENTRY_CONTINUATION = 0x20
 };
 
 struct __attribute__((__packed__)) volume_identifier {
@@ -58,4 +58,7 @@ struct __attribute__((__packed__)) inode {
     char continuation[64];
   };
 };
+
+int write_inode(int fd, struct inode *in,
+                       const char *partial_write_message);
 

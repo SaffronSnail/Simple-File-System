@@ -26,3 +26,7 @@ void construct_superblock(struct superblock *buffer,
 
 int write_superblock(int out, struct superblock *sb);
 
+static inline unsigned media_size(struct superblock sb) {
+  return sb.num_blocks * (1 << (sb.block_size + 7));
+}
+

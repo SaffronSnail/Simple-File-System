@@ -1,8 +1,8 @@
 #pragma once
 
 #include <errno.h>
-#include <linux/gfp.h>
 #include <string.h>
+#include <stdlib.h>
 #include <time.h>
 
 #define MAGIC 0x534653
@@ -23,13 +23,9 @@ static inline unsigned calculate_checksum(unsigned num_blocks,
                        - block_size;
 }
 
-char *to_unicode(const char *source) {
-  char *ret = kmalloc(strlen(source) + 1, 0);
+static inline char *to_unicode(const char *source) {
+  char *ret = (char *)malloc(strlen(source) + 1);
   strcpy(ret, source);
   return ret;
-}
-
-static inline unsigned media_size(struct superblock sb) {
-  return sb.num_blocks * (1 << (sb.block_size + 7));
 }
 

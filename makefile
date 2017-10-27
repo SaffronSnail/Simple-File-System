@@ -1,26 +1,25 @@
 .PHONY: all clean
 
-all: vd.hex
+all: build/vd.hex
 
-vd.hex: vd
-	hexdump -C vd > vd.hex
+build/vd.hex: build/vd
+	hexdump -C build/vd > build/vd.hex
 
-vd: mkfs.simple
+build/vd: build/mkfs.simple
 	tr '\0' '\377' < /dev/zero | dd bs=1024 of=$@ count=7680
-	sudo losetup /dev/loop6 vd
-	sudo su -c './mkfs.simple > /dev/loop6'
+	sudo losetup /dev/loop6 build/vd
+	sudo su -c './build/mkfs.simple > /dev/loop6'
 	sudo losetup -d /dev/loop6
 
-mkfs.simple: mkfs.simple.c superblock.o
+build/mkfs.simple: mkfs.simple.c build/superblock.o build/inode.o
 	gcc $^ -o $@
 
-superblock.o: superblock.c superblock.in superblock.h
+build/superblock.o: superblock.c superblock.in superblock.h internal.h
 	gcc -c superblock.c -o $@
 
+build/inode.o: inode.c inode.h internal.h
+	gcc -c inode.c -o $@
+
 clean:
-	-rm *.o
-	-rm *.gch
-	-rm mksfs
-	-rm vd
-	-rm vd.hex
+	-rm build/*
 
