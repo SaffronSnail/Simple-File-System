@@ -5,18 +5,19 @@
 */
 
 #define SUPERBLOCK_BEGIN 0x194
+#define SUPERBLOCK_END   0x1BD
 
 /* Format: SUPERBLOCK_ENTRY(offset, size in bytes, name) */
 // 404 bytes of padding for compatibility with boot code and BIOS
-SUPERBLOCK_ENTRY(0x194, 8, time_stamp)
-SUPERBLOCK_ENTRY(0x19C, 8, data_area_size)
-SUPERBLOCK_ENTRY(0x1A4, 8, index_area_size)
-SUPERBLOCK_ENTRY(0x1AC, 3, magic_number)
-SUPERBLOCK_ENTRY(0x1AF, 1, version_number)
-SUPERBLOCK_ENTRY(0x1B0, 8, num_blocks)
-SUPERBLOCK_ENTRY(0x1B8, 4, reserved_blocks)
-SUPERBLOCK_ENTRY(0x1BC, 1, block_size)
-SUPERBLOCK_ENTRY(0x1BD, 1, checksum)
+SUPERBLOCK_ENTRY(SUPERBLOCK_BEGIN, 8, time_stamp)
+SUPERBLOCK_ENTRY(0x19C,            8, data_area_size)
+SUPERBLOCK_ENTRY(0x1A4,            8, index_area_size)
+SUPERBLOCK_ENTRY(0x1AC,            3, magic_number)
+SUPERBLOCK_ENTRY(0x1AF,            1, version_number)
+SUPERBLOCK_ENTRY(0x1B0,            8, num_blocks)
+SUPERBLOCK_ENTRY(0x1B8,            4, reserved_blocks)
+SUPERBLOCK_ENTRY(0x1BC,            1, block_size)
+SUPERBLOCK_ENTRY(0x1BD,            1, checksum)
 // 66 bytes of padding for compatibility with partition tables and a boot
 // signature
 
