@@ -47,7 +47,7 @@ struct __attribute__((__packed__)) unusable {
 struct __attribute__((__packed__)) inode {
   union {
     struct {
-      enum entry_type label;
+      enum entry_type type;
       union {
         struct volume_identifier vi;
         struct directory dir;
